@@ -1,0 +1,23 @@
+version: '3.5'
+
+services: 
+    nginx-proxy:
+        image: 'nginx:1.19.0-alpine'
+        container_name: 'nginx-proxy'
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - './nginx/nginx.conf:/etc/nginx.conf'
+            - './nginx/conf.d:/etc/nginx/conf.d' 
+            - #'./nginx/upstream:/etc/nginx/upstream'
+            - './ssl:/var/ssl'       
+        networks:
+            - external-network
+        restart: always
+
+
+networks: 
+    external-network: 
+        external:
+            name: nginx-network
